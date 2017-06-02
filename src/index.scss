@@ -137,6 +137,47 @@ input {
 	padding: 1em;
 }
 
+.weatherDisplayer span {
+	margin-left: .25em;
+	font-size: 3em;
+}
+
+.weatherDisplayer span.hidden {
+	//display: none;
+	position: absolute;
+	opacity: 0;
+	left: 60px;
+	top: 0;
+}
+
+.weatherDisplayer section {
+	margin: 1em 0;
+	position: relative;
+}
+
+.weatherDisplayer div {
+	position: relative;
+	display: inline-block;
+}
+
+.weatherDisplayer div button {
+	position: absolute;
+	top: 0;
+	font-size: 1em;
+}
+
+.weatherDisplayer div button.inactive {
+	pointer-events: none;
+	opacity: .25;
+}
+
+.weatherDisplayer div button:nth-of-type(1) {
+	right: -1em;
+}
+.weatherDisplayer div button:nth-of-type(2) {
+	right: -2em;
+}
+
 svg {
 	position: absolute;
 	top: 0;

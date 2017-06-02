@@ -13,7 +13,11 @@ class WeatherManagerContainer extends React.Component {
 			weather: '',
 			submitValue: '',
 			city: '',
-			weatherImage: ''
+			weatherImage: '',
+			tempFahrenheit: '',
+			tempCelcius: '',
+			shouldHideF: false,
+			shouldHideC: true
 		};
 	}
 	
@@ -22,10 +26,15 @@ class WeatherManagerContainer extends React.Component {
 		if (this.state.isQuerySubmitted) {
 			component = <WeatherDisplayer 
 							data={this.state.weather} 
-							onClick={this.handleGoBack} 
+							onClick={this.handleGoBack}
+							onClickTemperature={this.handleClickTemperature}
 							imgSrc={this.state.weatherImage} 
 							city={this.state.city}
-							timeInfo={this.getDayAndTime()} />
+							timeInfo={this.getDayAndTime()}
+							tempFahrenheit={this.state.tempFahrenheit}
+							tempCelcius={this.state.tempCelcius}
+							shouldHideF={this.state.shouldHideF}
+							shouldHideC={this.state.shouldHideC} />
 		} else {
 			component = <Input onClick={this.handleOnClick} onChange={this.handleOnChange} />
 		}
@@ -57,15 +66,24 @@ class WeatherManagerContainer extends React.Component {
 			isQuerySubmitted: false
 		});
 	}
+	
+	handleClickTemperature = () => {
+		this.setState({
+			shouldHideF: !this.state.shouldHideF,
+			shouldHideC: !this.state.shouldHideC
+		});
+	}
 		
 	downloadWeather(city, apiKey) {
 		return $.getJSON('http://api.openweathermap.org/data/2.5/weather?q=' + city + '&APPID=' + apiKey).then((data) => {			
 			if (data) {
-				console.log(data);
+				console.log(data.main.temp);
 				this.setState({
 					city: data.name,
 					weatherImage: this.getWeatherImage(data.weather[0].icon),
-					weather: data
+					weather: data,
+					tempFahrenheit: this.kelvinToF(data.main.temp),
+					tempCelcius: this.kelvinToC(data.main.temp)
 				});	
 			} else {
 				console.log('something went wrong!');
@@ -116,6 +134,14 @@ class WeatherManagerContainer extends React.Component {
 			default:
 				return 'sunny.png';
 		}
+	}
+	
+	kelvinToF(temp) {
+		return parseFloat(9/5 * (temp - 273) + 32).toFixed(2);
+	}
+	
+	kelvinToC(temp) {
+		return parseFloat(temp - 273).toFixed(2);
 	}
 }
 
