@@ -9,6 +9,7 @@
   },
   "devDependencies": {
     "node-sass-chokidar": "0.0.1",
+    "prop-types": "^15.5.10",
     "react-scripts": "1.0.5"
   },
   "scripts": {

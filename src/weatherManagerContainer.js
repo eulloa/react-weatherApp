@@ -11,7 +11,8 @@ class WeatherManagerContainer extends React.Component {
 		super();
 		this.state = {
 			isQuerySubmitted: false,
-			weather: '',
+			weather: [],
+			weatherDescription: '',
 			submitValue: '',
 			city: '',
 			weatherImage: '',
@@ -22,25 +23,29 @@ class WeatherManagerContainer extends React.Component {
 		};
 	}
 	
-	render() {
-		let component = null;		
+	render() {	
 		if (this.state.isQuerySubmitted) {
-			component = <WeatherDisplayer 
-							data={this.state.weather} 
+			return (
+				<ul>
+				{this.state.weather.map((data, i) => {
+					return <WeatherDisplayer
+							key={i}
 							onClick={this.handleGoBack}
 							onClickTemperature={this.handleClickTemperature}
-							imgSrc={this.state.weatherImage} 
+							imgSrc={WeatherAuxiliary.getWeatherImage(data.weather[0].icon)}
+							weatherDescription={data.weather[0].description}
 							city={this.state.city}
 							timeInfo={WeatherAuxiliary.getDayAndTime()}
-							tempFahrenheit={this.state.tempFahrenheit}
-							tempCelcius={this.state.tempCelcius}
+							tempFahrenheit={WeatherAuxiliary.kelvinToF(data.main.temp)}
+							tempCelcius={WeatherAuxiliary.kelvinToC(data.main.temp)}
 							shouldHideF={this.state.shouldHideF}
 							shouldHideC={this.state.shouldHideC} />
+				})}
+				</ul>
+			);
 		} else {
-			component = <Input onClick={this.handleOnClick} onChange={this.handleOnChange} />
+			return <Input onClick={this.handleOnClick} onChange={this.handleOnChange} />
 		}
-		
-		return component;
 	}
 	
 	handleOnClick = () => {
@@ -76,16 +81,13 @@ class WeatherManagerContainer extends React.Component {
 	}
 		
 	downloadWeather(city, apiKey) {
-		return $.getJSON('http://api.openweathermap.org/data/2.5/weather?q=' + city + '&APPID=' + apiKey).then((data) => {			
+		return $.getJSON('http://api.openweathermap.org/data/2.5/forecast?q=' + city + '&APPID=' + apiKey).then((data) => {			
 			if (data) {
-				console.log(data);
 				this.setState({
-					city: data.name,
-					weatherImage: WeatherAuxiliary.getWeatherImage(data.weather[0].icon),
-					weather: data,
-					tempFahrenheit: WeatherAuxiliary.kelvinToF(data.main.temp),
-					tempCelcius: WeatherAuxiliary.kelvinToC(data.main.temp)
-				});	
+					city: data.city.name,
+					weather: data.list.slice(0, 5)
+				});
+				
 			} else {
 				console.log('something went wrong!');
 			}

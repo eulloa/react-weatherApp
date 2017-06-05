@@ -1,5 +1,6 @@
 import React from 'react';
 import IconSearch from './img/iconSearch';
+import PropTypes from 'prop-types';
 
 function Input(props) {
 	return (
@@ -9,5 +10,10 @@ function Input(props) {
 		</div>
 	);
 }
+
+Input.propTypes = {
+	onChange: PropTypes.func.isRequired,
+	onClick:  PropTypes.func.isRequired	
+};
 
 export default Input;
