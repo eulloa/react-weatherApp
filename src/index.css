@@ -205,11 +205,16 @@ input {
   border: 1px solid #ccc;
   padding: 1em; }
 
-.weatherDisplayer {
+.weatherWidget {
   max-width: 750px;
-  width: 500px;
   margin: 0 auto;
-  border: thin solid #ccc;
+  border: 1px solid #ccc; }
+
+.mainSection {
+  border-bottom: 1px solid #ccc; }
+
+.weatherDisplayer {
+  width: 100%;
   padding: 1em; }
 
 .weatherDisplayer span {
@@ -244,6 +249,47 @@ input {
 
 .weatherDisplayer div button:nth-of-type(2) {
   right: -2em; }
+
+/* ==========================================================================
+   forecast container
+   ========================================================================== */
+.forecastContainer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: nowrap; }
+
+.forecastContainer .weatherDisplayer {
+  cursor: pointer;
+  border-right: 1px solid #ccc; }
+
+.forecastContainer .weatherDisplayer:last-child {
+  border-right: 0; }
+
+.forecastContainer div .btnBack,
+.forecastContainer div section button {
+  display: none; }
+
+.forecastContainer div h1 {
+  font-size: 1em;
+  text-align: center; }
+
+.forecastContainer div h2 {
+  display: none; }
+
+.forecastContainer .weatherDisplayer section {
+  text-align: center;
+  margin: 0; }
+
+.forecastContainer .weatherDisplayer section img {
+  display: block;
+  margin: 0 auto; }
+
+.forecastContainer .weatherDisplayer section span {
+  margin-left: 0;
+  font-size: 1.5em; }
 
 svg {
   position: absolute;

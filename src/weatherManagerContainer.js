@@ -12,39 +12,54 @@ class WeatherManagerContainer extends React.Component {
 		this.state = {
 			isQuerySubmitted: false,
 			weather: [],
-			weatherDescription: '',
 			submitValue: '',
 			city: '',
-			weatherImage: '',
-			tempFahrenheit: '',
-			tempCelcius: '',
 			shouldHideF: false,
 			shouldHideC: true
 		};
 	}
 	
 	render() {	
-		if (this.state.isQuerySubmitted) {
+		if (this.state.isQuerySubmitted && this.state.weather.length) {
 			return (
-				<ul>
-				{this.state.weather.map((data, i) => {
-					return <WeatherDisplayer
-							key={i}
-							onClick={this.handleGoBack}
-							onClickTemperature={this.handleClickTemperature}
-							imgSrc={WeatherAuxiliary.getWeatherImage(data.weather[0].icon)}
-							weatherDescription={data.weather[0].description}
-							city={this.state.city}
-							timeInfo={WeatherAuxiliary.getDayAndTime()}
-							tempFahrenheit={WeatherAuxiliary.kelvinToF(data.main.temp)}
-							tempCelcius={WeatherAuxiliary.kelvinToC(data.main.temp)}
-							shouldHideF={this.state.shouldHideF}
-							shouldHideC={this.state.shouldHideC} />
-				})}
-				</ul>
+				<section className="weatherWidget">
+					<div className="mainSection">
+						<WeatherDisplayer
+								onClick={this.handleGoBack}
+								onClickTemperature={this.handleClickTemperature}
+								imgSrc={WeatherAuxiliary.getWeatherImage(this.state.weather[0].icon)}
+								weatherDescription={this.state.weather[0].weather[0].description}
+								city={this.state.city}
+								timeInfo={WeatherAuxiliary.getDayAndTime()}
+								tempFahrenheit={Math.round(WeatherAuxiliary.kelvinToF(this.state.weather[0].main.temp))}
+								tempCelcius={Math.round(WeatherAuxiliary.kelvinToC(this.state.weather[0].main.temp))}
+								shouldHideF={this.state.shouldHideF}
+								shouldHideC={this.state.shouldHideC}
+								isForecastItem={false} />
+					</div>
+					<div className="forecastContainer">
+						{this.state.weather.map((data, i) => {
+							console.log('data.dt_txt: ' + data.dt_txt);
+							return <WeatherDisplayer
+									key={i}
+									onClick={this.handleGoBack}
+									onClickTemperature={this.handleClickTemperature}
+									imgSrc={WeatherAuxiliary.getWeatherImage(data.weather[0].icon)}
+									weatherDescription={data.weather[0].description}
+									dayOfWeek={WeatherAuxiliary.getAbbreviatedDayOfWeek(data.dt_txt)}
+									city={this.state.city}
+									timeInfo={WeatherAuxiliary.getDayAndTime()}
+									tempFahrenheit={Math.round(WeatherAuxiliary.kelvinToF(data.main.temp))}
+									tempCelcius={Math.round(WeatherAuxiliary.kelvinToC(data.main.temp))}
+									shouldHideF={this.state.shouldHideF}
+									shouldHideC={this.state.shouldHideC}
+									isForecastItem={true} />
+						})}
+					</div>
+				</section>
 			);
 		} else {
-			return <Input onClick={this.handleOnClick} onChange={this.handleOnChange} />
+			return <Input onClick={this.handleOnClick} onChange={this.handleOnChange} onKeyPress={this.handleKeyPress} />
 		}
 	}
 	
@@ -69,7 +84,8 @@ class WeatherManagerContainer extends React.Component {
 	
 	handleGoBack = () => {
 		this.setState({
-			isQuerySubmitted: false
+			isQuerySubmitted: false,
+			submitValue: ''
 		});
 	}
 	
@@ -79,10 +95,17 @@ class WeatherManagerContainer extends React.Component {
 			shouldHideC: !this.state.shouldHideC
 		});
 	}
+	
+	handleKeyPress = (e) => {
+		if (e.key === 'Enter') {
+			this.handleOnClick();
+		}
+	}
 		
 	downloadWeather(city, apiKey) {
 		return $.getJSON('http://api.openweathermap.org/data/2.5/forecast?q=' + city + '&APPID=' + apiKey).then((data) => {			
 			if (data) {
+				console.log(data);
 				this.setState({
 					city: data.city.name,
 					weather: data.list.slice(0, 5)

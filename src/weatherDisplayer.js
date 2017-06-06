@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 
 function WeatherDisplayer(props) {
 	return (
-		<li className="weatherDisplayer">
-			<h1>{props.city}</h1>
+		<div className="weatherDisplayer">
+			<h1>{props.isForecastItem ? props.dayOfWeek : props.city}</h1>
 			<h2>{props.timeInfo}</h2>
 			<section>
 				<img src={'/img/' + props.imgSrc} alt={props.weatherDescription} />
@@ -16,7 +16,7 @@ function WeatherDisplayer(props) {
 				</div>
 			</section>
 			<button className="btnBack" onClick={props.onClick}>Go Back</button>
-		</li>
+		</div>
 	);
 }
 

@@ -52,6 +52,15 @@ class WeatherAuxiliary {
 	static kelvinToC(temp) {
 		return parseFloat(temp - 273).toFixed(2);
 	}
+	
+	static getAbbreviatedDayOfWeek(dt_txt) {
+		let date = new Date(dt_txt);
+		let daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+		
+		return daysOfWeek[date.getDay()];
+		
+		//console.log('ts: ' + ts);
+	}
 }
 
 export default WeatherAuxiliary;
