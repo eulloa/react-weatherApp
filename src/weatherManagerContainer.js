@@ -10,12 +10,12 @@ class WeatherManagerContainer extends React.Component {
 	constructor() {
 		super();
 		this.state = {
-			isQuerySubmitted: false,
-			weather: [],
-			submitValue: '',
 			city: '',
+			isQuerySubmitted: false,
+			submitValue: '',
 			shouldHideF: false,
-			shouldHideC: true
+			shouldHideC: true,
+			weather: []
 		};
 	}
 	
@@ -53,7 +53,11 @@ class WeatherManagerContainer extends React.Component {
 									tempCelcius={Math.round(WeatherAuxiliary.kelvinToC(data.main.temp))}
 									shouldHideF={this.state.shouldHideF}
 									shouldHideC={this.state.shouldHideC}
-									isForecastItem={true} />
+									isForecastItem={true}
+									tempFahrenheightHigh={Math.round(WeatherAuxiliary.kelvinToF(data.main.temp_max))}
+									tempFahrenheightLow={Math.round(WeatherAuxiliary.kelvinToF(data.main.temp_min))}
+									tempCelciusHigh={Math.round(WeatherAuxiliary.kelvinToC(data.main.temp_max))}
+									tempCelciusLow={Math.round(WeatherAuxiliary.kelvinToC(data.main.temp_max))} />
 						})}
 					</div>
 				</section>

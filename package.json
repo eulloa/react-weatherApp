@@ -8,6 +8,7 @@
     "react-dom": "^15.5.4"
   },
   "devDependencies": {
+    "jest": "^20.0.4",
     "node-sass-chokidar": "0.0.1",
     "prop-types": "^15.5.10",
     "react-scripts": "1.0.5"
@@ -17,7 +18,7 @@
     "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
+    "test": "jest",
     "eject": "react-scripts eject"
   }
 }

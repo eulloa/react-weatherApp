@@ -152,6 +152,12 @@ a, button, input[type=submit], .btn {
   transition: all .3s; }
 
 /* ==========================================================================
+   shared
+   ========================================================================== */
+.displayNone {
+  display: none; }
+
+/* ==========================================================================
    variables
    ========================================================================== */
 /* ==========================================================================
@@ -212,6 +218,14 @@ input {
 
 .mainSection {
   border-bottom: 1px solid #ccc; }
+
+.mainSection h1,
+.mainSection h2,
+.mainSection h3 {
+  color: #777; }
+
+.mainSection h2 {
+  margin-bottom: .25em; }
 
 .weatherDisplayer {
   width: 100%;
@@ -289,7 +303,7 @@ input {
 
 .forecastContainer .weatherDisplayer section span {
   margin-left: 0;
-  font-size: 1.5em; }
+  font-size: 1.25em; }
 
 svg {
   position: absolute;
