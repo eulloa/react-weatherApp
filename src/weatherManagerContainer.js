@@ -1,4 +1,5 @@
 import React from 'react';
+import MainWeatherDisplayer from './mainWeatherDisplayer';
 import WeatherDisplayer from './weatherDisplayer';
 import WeatherAuxiliary from './weatherAuxiliary';
 import Input from './input';
@@ -11,10 +12,12 @@ class WeatherManagerContainer extends React.Component {
 		super();
 		this.state = {
 			city: '',
+			childData: {},
 			isQuerySubmitted: false,
 			submitValue: '',
 			shouldHideF: false,
 			shouldHideC: true,
+			shouldUpdateMainDisplay: false,
 			weather: []
 		};
 	}
@@ -24,40 +27,60 @@ class WeatherManagerContainer extends React.Component {
 			return (
 				<section className="weatherWidget">
 					<div className="mainSection">
-						<WeatherDisplayer
+						<MainWeatherDisplayer
 								onClick={this.handleGoBack}
 								onClickTemperature={this.handleClickTemperature}
-								imgSrc={WeatherAuxiliary.getWeatherImage(this.state.weather[0].icon)}
-								weatherDescription={this.state.weather[0].weather[0].description}
+								imgSrc={
+									this.state.shouldUpdateMainDisplay ? 
+									this.state.childData.imgSrc :
+									WeatherAuxiliary.getWeatherImage(this.state.weather[0].icon)
+								}
+								weatherDescription={
+									this.state.shouldUpdateMainDisplay ? 
+										this.state.childData.weatherDescription :
+										this.state.weather[0].weather[0].description
+								}
 								city={this.state.city}
-								timeInfo={WeatherAuxiliary.getDayAndTime()}
-								tempFahrenheit={Math.round(WeatherAuxiliary.kelvinToF(this.state.weather[0].main.temp))}
-								tempCelcius={Math.round(WeatherAuxiliary.kelvinToC(this.state.weather[0].main.temp))}
+								timeInfo={
+									this.state.shouldUpdateMainDisplay ? 
+									this.state.childData.fullDayOfWeek :
+									WeatherAuxiliary.getDayAndTime()
+								}
+								tempFahrenheit={
+									this.state.shouldUpdateMainDisplay ? 
+									this.state.childData.tempFahrenheit :
+									Math.round(WeatherAuxiliary.kelvinToF(this.state.weather[0].temp.max))
+								}
+								tempCelcius={
+									this.state.shouldUpdateMainDisplay ? 
+									this.state.childData.tempCelcius :
+									Math.round(WeatherAuxiliary.kelvinToC(this.state.weather[0].temp.max))
+								}
 								shouldHideF={this.state.shouldHideF}
 								shouldHideC={this.state.shouldHideC}
 								isForecastItem={false} />
 					</div>
 					<div className="forecastContainer">
 						{this.state.weather.map((data, i) => {
-							console.log('data.dt_txt: ' + data.dt_txt);
 							return <WeatherDisplayer
 									key={i}
-									onClick={this.handleGoBack}
+									onClick={this.handleUpdateMainSection}
 									onClickTemperature={this.handleClickTemperature}
 									imgSrc={WeatherAuxiliary.getWeatherImage(data.weather[0].icon)}
 									weatherDescription={data.weather[0].description}
-									dayOfWeek={WeatherAuxiliary.getAbbreviatedDayOfWeek(data.dt_txt)}
+									dayOfWeek={WeatherAuxiliary.getDayOfWeek(data.dt, false)}
+									fullDayOfWeek={WeatherAuxiliary.getDayOfWeek(data.dt, true)}
 									city={this.state.city}
 									timeInfo={WeatherAuxiliary.getDayAndTime()}
-									tempFahrenheit={Math.round(WeatherAuxiliary.kelvinToF(data.main.temp))}
-									tempCelcius={Math.round(WeatherAuxiliary.kelvinToC(data.main.temp))}
+									tempFahrenheit={Math.round(WeatherAuxiliary.kelvinToF(data.temp.max))}
+									tempCelcius={Math.round(WeatherAuxiliary.kelvinToC(data.temp.max))}
 									shouldHideF={this.state.shouldHideF}
 									shouldHideC={this.state.shouldHideC}
 									isForecastItem={true}
-									tempFahrenheightHigh={Math.round(WeatherAuxiliary.kelvinToF(data.main.temp_max))}
-									tempFahrenheightLow={Math.round(WeatherAuxiliary.kelvinToF(data.main.temp_min))}
-									tempCelciusHigh={Math.round(WeatherAuxiliary.kelvinToC(data.main.temp_max))}
-									tempCelciusLow={Math.round(WeatherAuxiliary.kelvinToC(data.main.temp_max))} />
+									tempFahrenheightHigh={Math.round(WeatherAuxiliary.kelvinToF(data.temp.max))}
+									tempFahrenheightLow={Math.round(WeatherAuxiliary.kelvinToF(data.temp.min))}
+									tempCelciusHigh={Math.round(WeatherAuxiliary.kelvinToC(data.temp.max))}
+									tempCelciusLow={Math.round(WeatherAuxiliary.kelvinToC(data.temp.max))} />
 						})}
 					</div>
 				</section>
@@ -65,6 +88,13 @@ class WeatherManagerContainer extends React.Component {
 		} else {
 			return <Input onClick={this.handleOnClick} onChange={this.handleOnChange} onKeyPress={this.handleKeyPress} />
 		}
+	}
+	
+	handleUpdateMainSection = (data) => {
+		this.setState({
+			shouldUpdateMainDisplay: true,
+			childData: data
+		});
 	}
 	
 	handleOnClick = () => {
@@ -107,9 +137,8 @@ class WeatherManagerContainer extends React.Component {
 	}
 		
 	downloadWeather(city, apiKey) {
-		return $.getJSON('http://api.openweathermap.org/data/2.5/forecast?q=' + city + '&APPID=' + apiKey).then((data) => {			
+		return $.getJSON('http://api.openweathermap.org/data/2.5/forecast/daily?q=' + city + '&APPID=' + apiKey).then((data) => {			
 			if (data) {
-				console.log(data);
 				this.setState({
 					city: data.city.name,
 					weather: data.list.slice(0, 5)

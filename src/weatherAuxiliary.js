@@ -53,13 +53,12 @@ class WeatherAuxiliary {
 		return parseFloat(temp - 273).toFixed(2);
 	}
 	
-	static getAbbreviatedDayOfWeek(dt_txt) {
-		let date = new Date(dt_txt);
-		let daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-		
+	static getDayOfWeek(ts, shouldGetFullDayOfWeek) {
+		let date = new Date(ts * 1000);
+		let daysOfWeek = shouldGetFullDayOfWeek ? 
+			['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'] : 
+			['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 		return daysOfWeek[date.getDay()];
-		
-		//console.log('ts: ' + ts);
 	}
 }
 

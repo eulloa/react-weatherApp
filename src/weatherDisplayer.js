@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 function WeatherDisplayer(props) {
 	return (
-		<div className="weatherDisplayer">
+		<div className="weatherDisplayer" onClick={() => {props.onClick(props)}}>
 			<h1>{props.isForecastItem ? props.dayOfWeek : props.city}</h1>
 			<h2>{props.timeInfo}</h2>
 			<h3 className={props.isForecastItem ? 'displayNone' : ''}>{props.weatherDescription}</h3>
@@ -20,13 +20,13 @@ function WeatherDisplayer(props) {
 					<button className={props.shouldHideC ? '' : 'inactive'} onClick={props.onClickTemperature}>C</button>
 				</div>
 			</section>
-			<button className="btnBack" onClick={props.onClick}>Go Back</button>
 		</div>
 	);
 }
 
 WeatherDisplayer.propTypes = {
 	city:     			  PropTypes.string.isRequired,
+	fullDayOfWeek:        PropTypes.string.isRequired,
 	imgSrc:   			  PropTypes.string.isRequired,
 	isForecastItem:       PropTypes.bool.isRequired,
 	onClickTemperature:   PropTypes.func.isRequired,
