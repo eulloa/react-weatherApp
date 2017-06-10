@@ -6,7 +6,7 @@ function Input(props) {
 	return (
 		<div className="inputContainer">
 			<input onChange={props.onChange} onKeyPress={props.onKeyPress} type="text" placeholder="City name" />
-			<button className="btnSearch" onClick={props.onClick}><IconSearch /></button>
+			<button className="btnSearch" onClick={props.onClick}></button>
 		</div>
 	);
 }

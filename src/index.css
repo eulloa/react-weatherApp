@@ -176,9 +176,11 @@ a, button, input[type=submit], .btn {
   background-color: #e44134; }
 
 .btnSearch {
-  position: relative;
   width: 3em;
-  height: 3em; }
+  height: 2.3em;
+  float: right;
+  background: url(//ssl.gstatic.com/gb/images/v2_d8029326.png) 5px -195px no-repeat;
+  background-size: 100%; }
 
 /* ==========================================================================
    fonts/typography
@@ -206,10 +208,17 @@ body {
   padding: 0;
   font-family: sans-serif; }
 
+.inputContainer {
+  max-width: 500px;
+  margin: 1em auto 0 auto;
+  background-color: #ccc;
+  border-radius: .625em;
+  padding: .5em; }
+
 input {
-  height: 3em;
   border: 1px solid #ccc;
-  padding: 1em; }
+  padding: 1em;
+  width: calc(100% - 5em); }
 
 .weatherWidget {
   max-width: 750px;
