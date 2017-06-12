@@ -53,6 +53,10 @@ a, button, input[type=submit], .btn				{ -o-transition: all .3s; -ms-transition:
    shared
    ========================================================================== */
    
+/* ==========================================================================
+   keyframes
+   ========================================================================== */
+   
 .displayNone {
 	display: none;
 }
@@ -66,6 +70,7 @@ $redPrimary: #e44134;
 
 $grayPrimary: #777;
 $graySecondary: #ccc;
+$grayTertiary: #eee;
 
 
 /* ==========================================================================
@@ -143,22 +148,24 @@ body {
 	background-color: $graySecondary;
 	border-radius: .625em;
 	padding: .5em;
+	box-shadow: 0 5px 2px $grayTertiary;
 }
 
 input {
-	border: 1px solid #ccc;
+	border: 1px solid $graySecondary;
 	padding: 1em;
 	width: calc(100% - 5em);
 }
 
 .weatherWidget {
 	max-width: 750px;
-	margin: 0 auto;
-	border: 1px solid #ccc;
+	margin: 1em auto 0 auto;
+	border: 1px solid $graySecondary;
+	box-shadow: 0 5px 2px $grayTertiary;
 }
 
 .mainSection {
-	border-bottom: 1px solid #ccc;
+	border-bottom: 1px solid $graySecondary;
 }
 
 .mainSection h1, 
@@ -230,7 +237,7 @@ input {
 
 .forecastContainer .weatherDisplayer {
 	cursor: pointer;
-	border-right: 1px solid #ccc;
+	border-right: 1px solid $graySecondary;
 }
 
 .forecastContainer .weatherDisplayer:last-child {

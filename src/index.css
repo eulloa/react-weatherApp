@@ -213,7 +213,8 @@ body {
   margin: 1em auto 0 auto;
   background-color: #ccc;
   border-radius: .625em;
-  padding: .5em; }
+  padding: .5em;
+  box-shadow: 0 5px 2px #eee; }
 
 input {
   border: 1px solid #ccc;
@@ -222,8 +223,9 @@ input {
 
 .weatherWidget {
   max-width: 750px;
-  margin: 0 auto;
-  border: 1px solid #ccc; }
+  margin: 1em auto 0 auto;
+  border: 1px solid #ccc;
+  box-shadow: 0 5px 2px #eee; }
 
 .mainSection {
   border-bottom: 1px solid #ccc; }
