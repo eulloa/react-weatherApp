@@ -28,7 +28,7 @@ class App extends React.Component {
 	}
 	
 	render() {
-		const input = <Input onClick={this.handleOnClick} onChange={this.handleOnChange} onKeyPress={this.handleKeyPress} />;
+		const input = <Input initialInputValue={this.state.submitValue} onClick={this.handleOnClick} onChange={this.handleOnChange} onKeyPress={this.handleKeyPress} />;
 
 		if (this.state.isQuerySubmitted && this.state.weather.length) {
 			const weatheContainer = <WeatherManagerContainer 
@@ -79,6 +79,7 @@ class App extends React.Component {
 		}
 		
 		this.setState({
+			submitValue: '',
 			isQuerySubmitted: true
 		});
 	}

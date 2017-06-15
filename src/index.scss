@@ -62,21 +62,12 @@ a, button, input[type=submit], .btn				{ -o-transition: all .3s; -ms-transition:
   transition: opacity 500ms ease-in;
 }
 
-.anim-leave {
-  opacity: 1;
-  transition: opacity 5s ease-in;
-}
-
-.anim-leave.anim-leave-active {
-  opacity: 0.01;
-}
-
 /* ==========================================================================
    shared
    ========================================================================== */
 
 .degreeSymbol {
-	content: '\002103';
+	content: '\00b0';
 }
    
 /* ==========================================================================
@@ -239,6 +230,10 @@ input {
 	font-size: 1em;
 }
 
+.weatherDisplayer div button:before {
+	@extend .degreeSymbol;
+}
+
 .weatherDisplayer div button.inactive {
 	pointer-events: none;
 	opacity: .25;
@@ -249,7 +244,7 @@ input {
 }
 
 .weatherDisplayer div button:nth-of-type(2) {
-	right: -2em;
+	right: -2.5em;
 }
 
 /* ==========================================================================

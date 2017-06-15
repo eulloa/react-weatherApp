@@ -161,18 +161,11 @@ a, button, input[type=submit], .btn {
   opacity: 1;
   transition: opacity 500ms ease-in; }
 
-.anim-leave {
-  opacity: 1;
-  transition: opacity 5s ease-in; }
-
-.anim-leave.anim-leave-active {
-  opacity: 0.01; }
-
 /* ==========================================================================
    shared
    ========================================================================== */
-.degreeSymbol {
-  content: '\002103'; }
+.degreeSymbol, .weatherDisplayer div button:before {
+  content: '\00b0'; }
 
 /* ==========================================================================
    keyframes
@@ -296,7 +289,7 @@ input {
   right: -1em; }
 
 .weatherDisplayer div button:nth-of-type(2) {
-  right: -2em; }
+  right: -2.5em; }
 
 /* ==========================================================================
    forecast container

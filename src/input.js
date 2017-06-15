@@ -11,6 +11,7 @@ function Input(props) {
 			       type="text" 
 			       placeholder={placeholderText} 
 			       autoFocus={true}
+			       value={props.initialInputValue}
 			/>
 			<button className="btnSearch" onClick={props.onClick}></button>
 		</div>
@@ -18,9 +19,10 @@ function Input(props) {
 }
 
 Input.propTypes = {
-	onChange:   PropTypes.func.isRequired,
-	onClick:    PropTypes.func.isRequired,
-	onKeyPress: PropTypes.func.isRequired
+	initialInputValue:  PropTypes.string.isRequired,
+	onChange:   		PropTypes.func.isRequired,
+	onClick:    		PropTypes.func.isRequired,
+	onKeyPress: 		PropTypes.func.isRequired
 };
 
 export default Input;
