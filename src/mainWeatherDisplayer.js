@@ -16,7 +16,6 @@ function MainWeatherDisplayer(props) {
 					<button className={props.shouldHideC ? '' : 'inactive'} onClick={props.onClickTemperature}>C</button>
 				</div>
 			</section>
-			<button className="btnBack" onClick={props.onClick}>Go Back</button>
 		</div>
 	);
 }
@@ -25,7 +24,6 @@ MainWeatherDisplayer.propTypes = {
 	city:     			  PropTypes.string.isRequired,
 	imgSrc:   			  PropTypes.string.isRequired,
 	onClickTemperature:   PropTypes.func.isRequired,
-	onClick:              PropTypes.func.isRequired,
 	shouldHideF:		  PropTypes.bool.isRequired,
 	shouldHideC:		  PropTypes.bool.isRequired,
 	timeInfo:             PropTypes.string.isRequired,

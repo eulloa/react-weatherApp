@@ -152,7 +152,30 @@ a, button, input[type=submit], .btn {
   transition: all .3s; }
 
 /* ==========================================================================
+   animations
+   ========================================================================== */
+.anim-appear {
+  opacity: 0.01; }
+
+.anim-appear.anim-appear-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in; }
+
+.anim-leave {
+  opacity: 1;
+  transition: opacity 5s ease-in; }
+
+.anim-leave.anim-leave-active {
+  opacity: 0.01; }
+
+/* ==========================================================================
    shared
+   ========================================================================== */
+.degreeSymbol {
+  content: '\002103'; }
+
+/* ==========================================================================
+   keyframes
    ========================================================================== */
 .displayNone {
   display: none; }
@@ -323,7 +346,7 @@ svg {
   width: 3em;
   height: 3em; }
 
-transition, .btnBack {
+transition, .btnBack, .weatherWidget {
   -o-transition: all .3s;
   -ms-transition: all .3s;
   -moz-transition: all .3s;
