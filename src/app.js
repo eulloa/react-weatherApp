@@ -5,7 +5,7 @@ import WeatherManagerContainer from './weatherManagerContainer';
 import Input from './input';
 
 //deps
-import $ from 'jquery';
+import axios from 'axios';
 
 //transitions
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
@@ -25,6 +25,14 @@ class App extends React.Component {
 			shouldUpdateMainDisplay: false,
 			weather: []
 		};
+
+		this.handleUpdateMainSection = this.handleUpdateMainSection.bind(this)
+		this.handleOnClick = this.handleOnClick.bind(this)
+		this.handleOnChange = this.handleOnChange.bind(this)
+		this.handleGoBack = this.handleGoBack.bind(this)
+		this.handleClickTemperature = this.handleClickTemperature.bind(this)
+		this.handleKeyPress = this.handleKeyPress.bind(this)
+		this.downloadWeather = this.downloadWeather.bind(this)
 	}
 	
 	render() {
@@ -111,17 +119,15 @@ class App extends React.Component {
 	}
 		
 	downloadWeather(city, apiKey) {
-		return $.getJSON('http://api.openweathermap.org/data/2.5/forecast/daily?q=' + city + '&APPID=' + apiKey).then((data) => {			
-			if (data) {
+		axios.get('http://api.openweathermap.org/data/2.5/forecast/daily?q=' + city + '&APPID=' + apiKey)
+			.then((res) => {
 				this.setState({
-					city: data.city.name,
-					weather: data.list.slice(0, 5)
-				});
-				
-			} else {
-				console.log('something went wrong!');
-			}
-		});
+					city: res.data.city.name,
+					weather: res.data.list.slice(0, 5)
+				})
+			}).catch((e) => {
+				console.log(e)
+			})
 	}
 }
 
